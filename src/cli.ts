@@ -6,9 +6,9 @@ const { build } = require('gluegun')
 async function run(argv) {
   // create a CLI runtime
   const cli = build()
-    .brand('youtube2mp3')
+    .brand('youtube2audio')
     .src(__dirname)
-    // .plugins('./node_modules', { matching: 'youtube2mp3-*', hidden: true })
+    // .plugins('./node_modules', { matching: 'youtube2audio-*', hidden: true })
     .help() // provides default for help, h, --help, -h
     .version() // provides default for version, v, --version, -v
     .create()

@@ -1,11 +1,10 @@
 {
-  "name": "youtube2mp3",
+  "name": "youtube2audio",
   "version": "0.0.1",
-  "description": "youtube2mp3 CLI. Turn Youtube's video to mp3 sound track.",
-  "private": true,
+  "description": "youtube2audio CLI. Turn Youtube's video to mp3 sound track.",
   "types": "build/types/types.d.ts",
   "bin": {
-    "youtube2mp3": "bin/youtube2mp3"
+    "youtube2audio": "bin/youtube2audio"
   },
   "scripts": {
     "format": "prettier --write **/*.{js,ts,tsx,json}",
@@ -13,7 +12,7 @@
     "clean-build": "rm -rf ./build",
     "compile": "tsc -p .",
     "copy-templates": "if [ -e ./src/templates ]; then cp -a ./src/templates ./build/; fi",
-    "build": "yarn format && yarn lint && yarn clean-build && yarn compile && yarn copy-templates",
+    "build": "yarn format && yarn lint && yarn clean-build && yarn compile",
     "prepublishOnly": "yarn build",
     "test": "jest",
     "watch": "jest --watch",

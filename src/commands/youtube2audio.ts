@@ -9,7 +9,7 @@ import * as progress from 'cli-progress'
 // https://www.youtube.com/watch?v=I6X_MWHk7ds
 // https://www.youtube.com/watch?v=O80jI2O0HeM&t=5s
 const command: GluegunCommand = {
-  name: 'youtube2mp3',
+  name: 'youtube2audio',
   run: async toolbox => {
     const { print } = toolbox
     // Read app info from package.json
