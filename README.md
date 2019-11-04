@@ -1,4 +1,4 @@
-# youtubyoutube2audioe2mp3 CLI
+# youtube2audio CLI
 
 A CLI for youtube2audio. Turn Youtube's video to mp3 sound track.
 
