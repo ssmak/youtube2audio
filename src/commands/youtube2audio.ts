@@ -17,7 +17,7 @@ const command: GluegunCommand = {
   run: async toolbox => {
     const { print } = toolbox
 
-    let packageJsonFilePath: string = null;
+    let packageJsonFilePath: string = null
     module.paths.map((uri: string) => {
       const testPackageJsonFilePath = path.resolve(uri, '../package.json')
       if (!packageJsonFilePath && fs.existsSync(testPackageJsonFilePath)) {
@@ -60,7 +60,7 @@ const command: GluegunCommand = {
           print.info(`Audio: ${videoInfo.title}`)
           print.info(
             `Sample rate: ${parseInt(videoFormat.audio_sample_rate, 10) /
-            1000} kHz`
+              1000} kHz`
           )
           print.info(`Bitrate: ${videoFormat.audioBitrate} bps`)
           print.info(`Encoding: ${videoFormat.audioEncoding}\n`)
