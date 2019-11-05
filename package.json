@@ -2,6 +2,9 @@
   "name": "youtube2audio",
   "version": "0.0.4",
   "description": "youtube2audio CLI. Turn Youtube's video to mp3 sound track.",
+  "repository": {
+    "url": "https://github.com/ssmak/youtube2audio.git"
+  },
   "types": "build/types/types.d.ts",
   "bin": {
     "youtube2audio": "bin/youtube2audio"
