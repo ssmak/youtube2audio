@@ -5,16 +5,29 @@ import * as fs from 'fs'
 import * as path from 'path'
 import * as progress from 'cli-progress'
 
+// Testing link for Youtube
+//
 // https://youtu.be/I6X_MWHk7ds
 // https://www.youtube.com/watch?v=I6X_MWHk7ds
 // https://www.youtube.com/watch?v=O80jI2O0HeM&t=5s
+//
+
 const command: GluegunCommand = {
   name: 'youtube2audio',
   run: async toolbox => {
     const { print } = toolbox
+
+    let packageJsonFilePath: string = null;
+    module.paths.map((uri: string) => {
+      const testPackageJsonFilePath = path.resolve(uri, '../package.json')
+      if (!packageJsonFilePath && fs.existsSync(testPackageJsonFilePath)) {
+        packageJsonFilePath = testPackageJsonFilePath
+      }
+    })
+
     // Read app info from package.json
     const appConfig: any = JSON.parse(
-      fs.readFileSync(path.resolve(process.cwd(), 'package.json')).toString()
+      fs.readFileSync(packageJsonFilePath).toString()
     )
     const progressBar: any = new progress.SingleBar(
       {
@@ -47,7 +60,7 @@ const command: GluegunCommand = {
           print.info(`Audio: ${videoInfo.title}`)
           print.info(
             `Sample rate: ${parseInt(videoFormat.audio_sample_rate, 10) /
-              1000} kHz`
+            1000} kHz`
           )
           print.info(`Bitrate: ${videoFormat.audioBitrate} bps`)
           print.info(`Encoding: ${videoFormat.audioEncoding}\n`)
