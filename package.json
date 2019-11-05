@@ -1,6 +1,6 @@
 {
   "name": "youtube2audio",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "youtube2audio CLI. Turn Youtube's video to mp3 sound track.",
   "types": "build/types/types.d.ts",
   "bin": {
