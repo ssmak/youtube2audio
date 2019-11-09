@@ -44,10 +44,10 @@ const command: GluegunCommand = {
     const url: string = toolbox.parameters.first
     if (
       typeof url === 'string' &&
-      /^https:\/\/www\.youtube\.com\/watch\?v=[a-z0-9_]+/i.test(url)
+      /^https:\/\/www\.youtube\.com\/watch\?v=[a-z0-9_\-]+/i.test(url)
     ) {
       const urlInfo: RegExpMatchArray = url.match(
-        /^https:\/\/www\.youtube\.com\/watch\?v=([a-z0-9_]+)$/i
+        /^https:\/\/www\.youtube\.com\/watch\?v=([a-z0-9_\-]+)$/i
       )
       const filename = urlInfo.length >= 2 ? `${urlInfo[1]}.mp3` : null
       const outFilePath = path.resolve(filesystem.cwd(), filename)
@@ -58,11 +58,13 @@ const command: GluegunCommand = {
         'info',
         (videoInfo: ytdl.videoInfo, videoFormat: ytdl.videoFormat) => {
           print.info(`Audio: ${videoInfo.title}`)
-          print.info(
-            `Sample rate: ${parseInt(videoFormat.audio_sample_rate, 10) /
+          if (videoFormat.audio_sample_rate) {
+            print.info(
+              `Sample rate: ${parseInt(videoFormat.audio_sample_rate, 10) /
               1000} kHz`
-          )
-          print.info(`Bitrate: ${videoFormat.audioBitrate} bps`)
+            )
+          }
+          print.info(`Bitrate: ${videoFormat.audioBitrate} kbit/s`)
           print.info(`Encoding: ${videoFormat.audioEncoding}\n`)
           print.info(`Output to ${outFilePath}\n`)
           print.info(`Fetching from ${videoInfo.video_url}..`)
