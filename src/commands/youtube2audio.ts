@@ -61,7 +61,7 @@ const command: GluegunCommand = {
           if (videoFormat.audio_sample_rate) {
             print.info(
               `Sample rate: ${parseInt(videoFormat.audio_sample_rate, 10) /
-              1000} kHz`
+                1000} kHz`
             )
           }
           print.info(`Bitrate: ${videoFormat.audioBitrate} kbit/s`)
