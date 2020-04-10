@@ -2,6 +2,13 @@
   "name": "youtube2audio",
   "version": "0.0.6",
   "description": "youtube2audio CLI. Turn Youtube's video to mp3 sound track.",
+  "keywords": [
+    "youtube",
+    "download",
+    "cli",
+    "mp3",
+    "convert"
+  ],
   "repository": {
     "url": "https://github.com/ssmak/youtube2audio.git"
   },
@@ -35,8 +42,9 @@
   "dependencies": {
     "cli-progress": "^3.3.1",
     "figlet": "^1.2.4",
+    "fluent-ffmpeg": "^2.1.2",
     "gluegun": "latest",
-    "ytdl-core": "^1.0.0"
+    "ytdl-core": "^2.0.1"
   },
   "devDependencies": {
     "@types/jest": "^24.0.18",

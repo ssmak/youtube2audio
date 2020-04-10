@@ -4,6 +4,7 @@ import * as figlet from 'figlet'
 import * as fs from 'fs'
 import * as path from 'path'
 import * as progress from 'cli-progress'
+import * as ffmpeg from 'fluent-ffmpeg';
 
 // Testing link for Youtube
 //
@@ -49,24 +50,25 @@ const command: GluegunCommand = {
       const urlInfo: RegExpMatchArray = url.match(
         /^https:\/\/www\.youtube\.com\/watch\?v=([a-z0-9_\-]+)$/i
       )
+
       const filename = urlInfo.length >= 2 ? `${urlInfo[1]}.mp3` : null
       const outFilePath = path.resolve(filesystem.cwd(), filename)
       const outFileStream = fs.createWriteStream(outFilePath)
+      let audioInfo = null;
       const stream = ytdl(url, { filter: 'audioonly', quality: 'highestaudio' })
       // Show media info when ready
       stream.on(
         'info',
         (videoInfo: ytdl.videoInfo, videoFormat: ytdl.videoFormat) => {
+          audioInfo = videoInfo
           print.info(`Audio: ${videoInfo.title}`)
-          if (videoFormat.audio_sample_rate) {
+          if (videoFormat.audioSampleRate) {
             print.info(
-              `Sample rate: ${parseInt(videoFormat.audio_sample_rate, 10) /
+              `Sample rate: ${parseInt(videoFormat.audioSampleRate, 10) /
                 1000} kHz`
             )
           }
-          print.info(`Bitrate: ${videoFormat.audioBitrate} kbit/s`)
-          print.info(`Encoding: ${videoFormat.audioEncoding}\n`)
-          print.info(`Output to ${outFilePath}\n`)
+          print.info(`Channel: ${videoFormat.audioChannels}\n`)
           print.info(`Fetching from ${videoInfo.video_url}..`)
 
           progressBar.start(100, 0)
@@ -85,8 +87,30 @@ const command: GluegunCommand = {
       )
 
       stream.on('end', () => {
-        // progressBar.stop()
+        progressBar.stop()
         print.info('Done!')
+
+        const optOutputFile = `${filesystem.cwd()}/${audioInfo.title}.mp3`
+
+        ffmpeg(outFilePath)
+          // .output(stream, { end: true})
+          .on('start', () => {
+            print.info('Optimizing the audio file..')
+            progressBar.start(100, 0)
+          })
+          .on('progress', (progress) => {
+            progressBar.update(Math.ceil(progress.percent))
+          })
+          .on('end', () => {
+            // Delete the un-optimized file
+            fs.unlink(outFilePath, () => {
+              progressBar.stop();
+              print.info('Done!')
+              print.info(`Output to ${optOutputFile}\n`)
+              process.exit()
+            });
+          })
+          .save(optOutputFile)
       })
 
       stream.pipe(
